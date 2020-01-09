@@ -1,0 +1,41 @@
+rm(list=ls())
+best<-function(state,num){
+outcome <- read.csv("outcome-of-care-measures.csv", colClasses = "character")
+head(outcome)
+
+x<-outcome[,2]
+y<-outcome[,11]
+z<-outcome[,7]
+v<-outcome[,17]
+w<-outcome[,23]
+#'Turnin not available to na"
+numy<-as.numeric(y)
+numv<-as.numeric(v)
+numw<-as.numeric(w)
+#choice of outcome
+if (num=='heart attack'){print('option1')
+       num<-numy}
+    else  if(num=='heart failure'){print('option 2')
+         num<-numv
+      }else if(num=='pneumonia'){print('option 3')
+     num<-numw
+     }else
+    
+   {stop( 'no such outcome')}
+    #what if not a us state or wrong state .Stop not such state 
+       if(!(state %in% z)){
+         stop('this is not a US state ')}
+
+a<-cbind(x,num,z) #binding hospital names with outcome and zip
+b<-na.omit(a)  #geting rid of na's
+k<-sort(b[,2]) # not really needed
+q<-b[order(b[,2]),]# order
+
+state<-subset(q,q[,3]==state) # results from the specified stae only
+
+         
+ww<-which.min(state[,2]) "row of the min col"
+
+print(state[which.min(state[,2]),])('print that row min deaths = best hospital')
+}
+
